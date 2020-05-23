@@ -1,4 +1,4 @@
-var submissions = [{
+let submissions = [{
     name: 'jane',
     score: 95,
     date: '2020-01-24',
@@ -25,11 +25,14 @@ var submissions = [{
 ]
 
 function addSubmission(array, newName, newScore, newDate) {
-    let obj = {};
-
-    obj.name = newName;
-    obj.score = newScore;
-    obj.date = newDate;
+    // Your solution definitely works. Here's a way
+    // of creating the object and its properties
+    // that looks a little more tidy:
+    let obj = {
+        name: newName,
+        score: newScore,
+        date: newDate
+    };
 
     if (newScore >= 60) {
         obj.passed = true
@@ -44,41 +47,52 @@ function deleteSubmissionByIndex(array, index) {
     array.splice(index, 1)
 }
 function deleteSubmissionByName(array, name) {
-    array.splice(array.findIndex(arr => arr === name), 1);
+    // The `submissions` variable is an array of objects.
+    // Inside of `findIndex`, we're looping through those objects
+    // one at a time. So the name "obj" is arbitrary, but it
+    // might help to show what's actually going on. Make sure
+    // to compare against the value of the name property, instead
+    // of the whole object:
+    array.splice(array.findIndex(obj => obj.name === name), 1);
 }
 
 function editSubmission(array, index, score) {
-    let arrToEdit = array[index];
-    arrToEdit.score = score;
+    let objToEdit = array[index];
+    objToEdit.score = score;
     if (score >= 60) {
-        arrToEdit.passed = true
+        objToEdit.passed = true
     } else {
-        arrToEdit.passed = false
+        objToEdit.passed = false
     }
 }
+// editSubmission(submissions, 3, 12);
+// console.log(submissions);
 
 function findSubmissionByName(array, name) {
-    return array.find(arr => arr.name === name)
+    return array.find(obj => obj.name === name)
 }
     
 
 function findLowestScore(array) {
     let num = array[0].score;
-    array.map(arr => num > arr.score ? num = arr.score : num)
+    array.map(obj => num > obj.score ? num = obj.score : num)
     return num
 }
 
 function findAverageScore(array) {
     let average = 0;
-    for (let arr of array) {
-        average += arr.score;
+    for (let obj of array) {
+        average += obj.score;
     }
     return average / array.length
 }
+// console.log(findAverageScore(submissions));
 function filterPassing(array) {
-    return array.filter(arr => arr.passed === true)
+    return array.filter(obj => obj.passed === true)
 }
+// console.log(filterPassing(submissions));
 
 function filter90AndAbove(array) {
-    return array.filter(arr => arr.score >= 90)
+    return array.filter(obj => obj.score >= 90)
 }
+// console.log(filter90AndAbove(submissions));
